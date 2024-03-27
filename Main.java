@@ -25,7 +25,7 @@ class Game {
     }
 }
 
-class Display {
+public class Main {
     static Game game;
 
     public void displayMainMenu() {
@@ -87,8 +87,6 @@ class Display {
         }
     }
 
-    public void 
-
     public void displayGame(Game game) {
         System.out.println("Guess the Passcode!");
         System.out.printf("Enter a %d-digit number from 1-%d%:n ", Game.numDigits, Game.maxNumber);
@@ -102,9 +100,6 @@ class Display {
         }
     }
 
-}
-
-public class Main {
     public static void main(String[] args) {
         
     }
