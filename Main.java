@@ -32,6 +32,7 @@ public class Main {
         System.out.println("Main Menu");
         System.out.println("1. Play Game");
         System.out.println("2. Leaderboard");
+        System.out.println("3. Exit");
         
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
@@ -59,6 +60,45 @@ public class Main {
         System.out.println("3. Hard");
         System.out.println("4. Custom");
         System.out.println("5. Main Menu");
+
+        System.out.print("Enter your choice: ");
+        Scanner sc = new Scanner(System.in);
+        int choice = sc.nextInt();
+
+        switch(choice) {
+            case 1:
+                game = new Game(3, 8, 4);
+                Game.setSecretCode();
+                displayGame(game);
+                break;
+            case 2:
+                game = new Game(4, 10, 6);
+                Game.setSecretCode();
+                displayGame(game);
+                break;
+            case 3:
+                game = new Game(5, 12, 8);
+                Game.setSecretCode();
+                displayGame(game);
+                break;
+            case 4:
+                System.out.print("Enter number of digits: ");
+                int numDigits = sc.nextInt();
+                System.out.print("Enter max number: ");
+                int maxNumber = sc.nextInt();
+                System.out.print("Enter max tries: ");
+                int maxTries = sc.nextInt();
+                game = new Game(numDigits, maxTries, maxNumber);
+                Game.setSecretCode();
+                displayGame(game);
+                break;
+            case 5:
+                displayMainMenu();
+                break;
+            default:
+                System.out.println("Invalid choice");
+                break;
+        }
     }
 
     public void displayLeaderboard() {
@@ -158,6 +198,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        
+        Main main = new Main();
+        main.displayMainMenu();
     }
 }
