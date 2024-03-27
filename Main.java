@@ -5,6 +5,13 @@ import java.util.Deque;
 import java.util.HashMap;
 
 class Game {
+
+    Game(int numDigits, int maxTries, int maxNumber) {
+        Game.numDigits = numDigits;
+        Game.maxTries = maxTries;
+        Game.maxNumber = maxNumber;
+    }
+    
     static int numDigits;
     static int maxTries;
     static int maxNumber;
@@ -17,11 +24,6 @@ class Game {
         }
     }
 
-    Game(int numDigits, int maxTries, int maxNumber) {
-        Game.numDigits = numDigits;
-        Game.maxTries = maxTries;
-        Game.maxNumber = maxNumber;
-    }
 }
 
 public class Main {
@@ -99,6 +101,7 @@ public class Main {
                 System.out.println("Invalid choice");
                 break;
         }
+        sc.close();
     }
 
     public void displayLeaderboard() {
@@ -124,6 +127,7 @@ public class Main {
                 System.out.println("Invalid choice");
                 break;
         }
+        sc.close();
     }
 
     public int[] checkGuess(int[] guess) {
