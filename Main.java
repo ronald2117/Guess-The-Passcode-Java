@@ -175,11 +175,10 @@ public class Main {
     }
 
     public void displayGame(Game game) {
-        setSecretCode();
+        setSecretCode( );
+        Scanner sc = new Scanner(System.in);
         Deque<HashMap<int[], int[]>> guesses = new ArrayDeque<HashMap<int[], int[]>>();
         int round = 1;
-
-        clearConsole();
 
         System.out.println("Guess the Passcode!");
         System.out.println("You have " + game.maxTries + " tries to guess the " + game.numDigits + "-digit number.");
@@ -213,7 +212,6 @@ public class Main {
                 }
             }
             System.out.printf("%n%nEnter a %d-digit number from 1-%d:%n", game.numDigits, game.maxNumber);
-            Scanner sc = new Scanner(System.in);
             input = sc.nextLine();
             inputArr = input.split(" ");
             guess = new int[game.numDigits];
@@ -225,8 +223,8 @@ public class Main {
             guesses.add(guessMap);
             round++;
 
-            sc.close();
         }
+        sc.close();
     }
 
     public static void main(String[] args) {
