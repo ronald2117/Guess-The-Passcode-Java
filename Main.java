@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.Random;
+import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -28,6 +29,19 @@ class Game {
 
 public class Main {
     static Game game;
+
+    public static void clearConsole() {
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (IOException | InterruptedException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     public void displayMainMenu() {
         System.out.println("Welcome to the Guess the Code Game");
