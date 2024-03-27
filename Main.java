@@ -148,6 +148,10 @@ public class Main {
         int[] result = new int[2];
         boolean[] checked = new boolean[game.numDigits];
         for (int i = 0; i < game.numDigits; i++) {
+            checked[i] = false;
+        }
+
+        for (int i = 0; i < game.numDigits; i++) {
             if (guess[i] == game.secretCode[i]) {
                 result[0]++;
                 checked[i] = true;
@@ -170,6 +174,7 @@ public class Main {
     }
 
     public void displayGame(Game game) {
+        setSecretCode();
         Deque<HashMap<int[], int[]>> guesses = new ArrayDeque<HashMap<int[], int[]>>();
         int round = 1;
 
