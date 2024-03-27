@@ -176,6 +176,8 @@ public class Main {
         Deque<HashMap<int[], int[]>> guesses = new ArrayDeque<HashMap<int[], int[]>>();
         int round = 1;
 
+        clearConsole();
+
         System.out.println("Guess the Passcode!");
         System.out.println("You have " + Game.maxTries + " tries to guess the " + Game.numDigits + "-digit number.");
         
@@ -186,7 +188,10 @@ public class Main {
             HashMap<int[], int[]> guessMap;
 
             System.out.println("Round " + round + "/" + Game.maxTries);
-            System.out.println("Guesses: ");
+
+            if(round != 1) {
+                System.out.println("Guesses: ");
+            }
             for (HashMap<int[], int[]> entry : guesses) {
                 for (int[] key : entry.keySet()) {
                     for (int i = 0; i < Game.numDigits; i++) {
@@ -203,7 +208,7 @@ public class Main {
                     System.out.println();
                 }
             }
-            System.out.printf("Enter a %d-digit number from 1-%d:%n ", Game.numDigits, Game.maxNumber);
+            System.out.printf("%n%nEnter a %d-digit number from 1-%d:%n", Game.numDigits, Game.maxNumber);
             Scanner sc = new Scanner(System.in);
             input = sc.nextLine();
             inputArr = input.split(" ");
