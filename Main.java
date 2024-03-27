@@ -185,6 +185,7 @@ public class Main {
         System.out.println("You have " + game.maxTries + " tries to guess the " + game.numDigits + "-digit number.");
         
         while (round <= game.maxTries) {
+            clearConsole();
             String input;
             String[] inputArr;
             int[] guess;
@@ -200,7 +201,7 @@ public class Main {
                     for (int i = 0; i < game.numDigits; i++) {
                         System.out.print(key[i] + " ");
                     }
-                    System.out.print("Result: ");
+                    System.out.print("-> ");
                     for (int i = 0; i < 2; i++) {
                         if (i == 0) {
                             System.out.print("\u001B[32m" + entry.get(key)[i] + " "); // Green text
