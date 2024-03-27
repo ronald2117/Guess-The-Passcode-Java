@@ -7,7 +7,6 @@ class Game {
     static int maxNumber;
     static int secretCode[] = new int[numDigits];
 
-    //put random numbers in secretCode ranging from 1 to maxNumber
     public static void setSecretCode() {
         Random rand = new Random();
         for (int i = 0; i < numDigits; i++) {
@@ -23,6 +22,8 @@ class Game {
 }
 
 class Display {
+    static Game game;
+
     public void displayMainMenu() {
         System.out.println("Welcome to the Guess the Code Game");
         System.out.println("Main Menu");
@@ -80,6 +81,11 @@ class Display {
                 System.out.println("Invalid choice");
                 break;
         }
+    }
+
+    public void displayGame(Game game) {
+        System.out.println("Guess the Passcode!");
+        System.out.printf("Enter a %d-digit number from 1-%d: ", Game.numDigits, Game.maxNumber);
     }
 
 }
