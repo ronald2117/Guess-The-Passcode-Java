@@ -8,22 +8,15 @@ import java.util.HashMap;
 class Game {
 
     Game(int numDigits, int maxTries, int maxNumber) {
-        Game.numDigits = numDigits;
-        Game.maxTries = maxTries;
-        Game.maxNumber = maxNumber;
+        this.numDigits = numDigits;
+        this.maxTries = maxTries;
+        this.maxNumber = maxNumber;
     }
     
-    static int numDigits;
-    static int maxTries;
-    static int maxNumber;
-    static int secretCode[] = new int[numDigits];
-
-    public static void setSecretCode() {
-        Random rand = new Random();
-        for (int i = 0; i < numDigits; i++) {
-            secretCode[i] = rand.nextInt(maxNumber) + 1;
-        }
-    }
+    int numDigits;
+    int maxTries;
+    int maxNumber;
+    int secretCode[] = new int[this.numDigits];
 
 }
 
@@ -86,17 +79,14 @@ public class Main {
 
         switch(choice) {
             case 1:
-                Game.setSecretCode();
                 game = new Game(3, 8, 4);
                 displayGame(game);
                 break;
             case 2:
-                Game.setSecretCode();
                 game = new Game(4, 10, 6);
                 displayGame(game);
                 break;
             case 3:
-                Game.setSecretCode();
                 game = new Game(5, 12, 8);
                 displayGame(game);
                 break;
@@ -108,7 +98,6 @@ public class Main {
                 System.out.print("Enter max tries: ");
                 int maxTries = sc.nextInt();
                 game = new Game(numDigits, maxTries, maxNumber);
-                Game.setSecretCode();
                 displayGame(game);
                 break;
             case 5:
@@ -122,6 +111,7 @@ public class Main {
     }
 
     public void displayLeaderboard() {
+        clearConsole();
         System.out.println("Leaderboard");
         System.out.println("1. Easy");
         System.out.println("2. Medium");
@@ -147,20 +137,27 @@ public class Main {
         sc.close();
     }
 
+    public static void setSecretCode() {
+        Random rand = new Random();
+        for (int i = 0; i < game.numDigits; i++) {
+            game.secretCode[i] = rand.nextInt(game.maxNumber) + 1;
+        }
+    }
+
     public int[] checkGuess(int[] guess) {
         int[] result = new int[2];
-        boolean[] checked = new boolean[Game.numDigits];
-        for (int i = 0; i < Game.numDigits; i++) {
-            if (guess[i] == Game.secretCode[i]) {
+        boolean[] checked = new boolean[game.numDigits];
+        for (int i = 0; i < game.numDigits; i++) {
+            if (guess[i] == game.secretCode[i]) {
                 result[0]++;
                 checked[i] = true;
             }
         }
         
-        for (int i = 0; i < Game.numDigits; i++) {
+        for (int i = 0; i < game.numDigits; i++) {
             if (!checked[i]) {
-                for (int j = 0; j < Game.numDigits; j++) {
-                    if (guess[i] == Game.secretCode[j] && !checked[j]) {
+                for (int j = 0; j < game.numDigits; j++) {
+                    if (guess[i] == game.secretCode[j] && !checked[j]) {
                         result[1]++;
                         break;
                     }
@@ -179,22 +176,22 @@ public class Main {
         clearConsole();
 
         System.out.println("Guess the Passcode!");
-        System.out.println("You have " + Game.maxTries + " tries to guess the " + Game.numDigits + "-digit number.");
+        System.out.println("You have " + game.maxTries + " tries to guess the " + game.numDigits + "-digit number.");
         
-        while (round <= Game.maxTries) {
+        while (round <= game.maxTries) {
             String input;
             String[] inputArr;
             int[] guess;
             HashMap<int[], int[]> guessMap;
 
-            System.out.println("Round " + round + "/" + Game.maxTries);
+            System.out.println("Round " + round + "/" + game.maxTries);
 
             if(round != 1) {
                 System.out.println("Guesses: ");
             }
             for (HashMap<int[], int[]> entry : guesses) {
                 for (int[] key : entry.keySet()) {
-                    for (int i = 0; i < Game.numDigits; i++) {
+                    for (int i = 0; i < game.numDigits; i++) {
                         System.out.print(key[i] + " ");
                     }
                     System.out.print("Result: ");
@@ -208,12 +205,12 @@ public class Main {
                     System.out.println();
                 }
             }
-            System.out.printf("%n%nEnter a %d-digit number from 1-%d:%n", Game.numDigits, Game.maxNumber);
+            System.out.printf("%n%nEnter a %d-digit number from 1-%d:%n", game.numDigits, game.maxNumber);
             Scanner sc = new Scanner(System.in);
             input = sc.nextLine();
             inputArr = input.split(" ");
-            guess = new int[Game.numDigits];
-            for (int i = 0; i < Game.numDigits; i++) {
+            guess = new int[game.numDigits];
+            for (int i = 0; i < game.numDigits; i++) {
                 guess[i] = Integer.parseInt(inputArr[i]);
             }
             guessMap = new HashMap<int[], int[]>();
