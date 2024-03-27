@@ -220,6 +220,8 @@ public class Main {
             guessMap.put(guess, checkGuess(guess));
             guesses.add(guessMap);
             round++;
+
+            sc.close();
         }
     }
 
