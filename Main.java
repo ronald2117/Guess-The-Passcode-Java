@@ -87,6 +87,31 @@ public class Main {
         }
     }
 
+    public int[] checkGuess(int[] guess) {
+        int[] result = new int[2];
+        boolean[] checked = new boolean[Game.numDigits];
+        for (int i = 0; i < Game.numDigits; i++) {
+            if (guess[i] == Game.secretCode[i]) {
+                result[0]++;
+                checked[i] = true;
+            }
+        }
+        
+        for (int i = 0; i < Game.numDigits; i++) {
+            if (!checked[i]) {
+                for (int j = 0; j < Game.numDigits; j++) {
+                    if (guess[i] == Game.secretCode[j] && !checked[j]) {
+                        result[1]++;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return result;
+
+    }
+
     public void displayGame(Game game) {
         System.out.println("Guess the Passcode!");
         System.out.printf("Enter a %d-digit number from 1-%d%:n ", Game.numDigits, Game.maxNumber);
@@ -98,6 +123,9 @@ public class Main {
         for (int i = 0; i < Game.numDigits; i++) {
             guess[i] = Integer.parseInt(inputArr[i]);
         }
+        //store the guess and the result in a hashmap and add it to the guesses deque
+        HashMap<int[], int[]> guessMap = new HashMap<int[], int[]>();
+        guessMap.put(guess, checkGuess(guess));
     }
 
     public static void main(String[] args) {
