@@ -1,11 +1,14 @@
 import java.util.Scanner;
 import java.util.Random;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 class Game {
     static int numDigits;
     static int maxTries;
     static int maxNumber;
     static int secretCode[] = new int[numDigits];
+    static Deque<int []> guesses = new ArrayDeque<int []>();
 
     public static void setSecretCode() {
         Random rand = new Random();
