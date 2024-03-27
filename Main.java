@@ -113,20 +113,48 @@ public class Main {
 
     public void displayGame(Game game) {
         Deque<HashMap<int[], int[]>> guesses = new ArrayDeque<HashMap<int[], int[]>>();
+        int round = 1;
 
         System.out.println("Guess the Passcode!");
-        System.out.printf("Enter a %d-digit number from 1-%d%:n ", Game.numDigits, Game.maxNumber);
-        //get space separated integers from the user and store it in an array
-        Scanner sc = new Scanner(System.in);
-        String input = sc.nextLine();
-        String[] inputArr = input.split(" ");
-        int[] guess = new int[Game.numDigits];
-        for (int i = 0; i < Game.numDigits; i++) {
-            guess[i] = Integer.parseInt(inputArr[i]);
+        System.out.println("You have " + Game.maxTries + " tries to guess the " + Game.numDigits + "-digit number.");
+        
+        while (round <= Game.maxTries) {
+            String input;
+            String[] inputArr;
+            int[] guess;
+            HashMap<int[], int[]> guessMap;
+
+            System.out.println("Round " + round + "/" + Game.maxTries);
+            System.out.println("Guesses: ");
+            for (HashMap<int[], int[]> entry : guesses) {
+                for (int[] key : entry.keySet()) {
+                    for (int i = 0; i < Game.numDigits; i++) {
+                        System.out.print(key[i] + " ");
+                    }
+                    System.out.print("Result: ");
+                    for (int i = 0; i < 2; i++) {
+                        if (i == 0) {
+                            System.out.print("\u001B[32m" + entry.get(key)[i] + " "); // Green text
+                        } else {
+                            System.out.print("\u001B[31m" + entry.get(key)[i] + " "); // Red text
+                        }
+                    }
+                    System.out.println();
+                }
+            }
+            System.out.printf("Enter a %d-digit number from 1-%d:%n ", Game.numDigits, Game.maxNumber);
+            Scanner sc = new Scanner(System.in);
+            input = sc.nextLine();
+            inputArr = input.split(" ");
+            guess = new int[Game.numDigits];
+            for (int i = 0; i < Game.numDigits; i++) {
+                guess[i] = Integer.parseInt(inputArr[i]);
+            }
+            guessMap = new HashMap<int[], int[]>();
+            guessMap.put(guess, checkGuess(guess));
+            guesses.add(guessMap);
+            round++;
         }
-        //store the guess and the result in a hashmap and add it to the guesses deque
-        HashMap<int[], int[]> guessMap = new HashMap<int[], int[]>();
-        guessMap.put(guess, checkGuess(guess));
     }
 
     public static void main(String[] args) {
