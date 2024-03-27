@@ -11,12 +11,13 @@ class Game {
         this.numDigits = numDigits;
         this.maxTries = maxTries;
         this.maxNumber = maxNumber;
+        secretCode = new int[numDigits];
     }
     
     int numDigits;
     int maxTries;
     int maxNumber;
-    int secretCode[] = new int[this.numDigits];
+    int secretCode[];
 
 }
 
