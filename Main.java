@@ -69,18 +69,18 @@ public class Main {
 
         switch(choice) {
             case 1:
-                game = new Game(3, 8, 4);
                 Game.setSecretCode();
+                game = new Game(3, 8, 4);
                 displayGame(game);
                 break;
             case 2:
-                game = new Game(4, 10, 6);
                 Game.setSecretCode();
+                game = new Game(4, 10, 6);
                 displayGame(game);
                 break;
             case 3:
-                game = new Game(5, 12, 8);
                 Game.setSecretCode();
+                game = new Game(5, 12, 8);
                 displayGame(game);
                 break;
             case 4:
