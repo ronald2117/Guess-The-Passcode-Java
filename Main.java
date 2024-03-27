@@ -9,7 +9,6 @@ class Game {
     static int maxTries;
     static int maxNumber;
     static int secretCode[] = new int[numDigits];
-    static Deque<HashMap<int[], int[]>> guesses = new ArrayDeque<HashMap<int[], int[]>>();
 
     public static void setSecretCode() {
         Random rand = new Random();
@@ -113,6 +112,8 @@ public class Main {
     }
 
     public void displayGame(Game game) {
+        Deque<HashMap<int[], int[]>> guesses = new ArrayDeque<HashMap<int[], int[]>>();
+
         System.out.println("Guess the Passcode!");
         System.out.printf("Enter a %d-digit number from 1-%d%:n ", Game.numDigits, Game.maxNumber);
         //get space separated integers from the user and store it in an array
