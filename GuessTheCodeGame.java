@@ -22,6 +22,68 @@ class Game {
     }
 }
 
+class Display {
+    public void displayMainMenu() {
+        System.out.println("Welcome to the Guess the Code Game");
+        System.out.println("Main Menu");
+        System.out.println("1. Play Game");
+        System.out.println("2. Leaderboard");
+        
+        Scanner sc = new Scanner(System.in);
+        int choice = sc.nextInt();
+        switch (choice) {
+            case 1:
+                displayGameMenu();
+                break;
+            case 2:
+                //displayLeaderboard();
+                break;
+                case 3:
+                System.exit(0);
+                break;
+                default:
+                System.out.println("Invalid choice");
+                break;
+            }
+            sc.close();
+    }
+
+    public void displayGameMenu() {
+        System.out.println("Game Menu");
+        System.out.println("1. Easy");
+        System.out.println("2. Medium");
+        System.out.println("3. Hard");
+        System.out.println("4. Custom");
+        System.out.println("5. Main Menu");
+    }
+
+    public void displayLeaderboard() {
+        System.out.println("Leaderboard");
+        System.out.println("1. Easy");
+        System.out.println("2. Medium");
+        System.out.println("3. Hard");
+
+        Scanner sc = new Scanner(System.in);
+        int choice = sc.nextInt();
+
+        switch (choice) {
+            case 1:
+                //displayEasyLeaderboard();
+                break;
+            case 2:
+                //displayMediumLeaderboard();
+                break;
+            case 3:
+                //displayHardLeaderboard();
+                break;
+            default:
+                System.out.println("Invalid choice");
+                break;
+        }
+    }
+
+}
+
 public class GuessTheCodeGame {
     public static void main(String[] args) {
         
