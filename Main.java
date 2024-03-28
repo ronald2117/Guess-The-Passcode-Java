@@ -179,6 +179,7 @@ public class Main {
         setSecretCode();
         Scanner sc = new Scanner(System.in);
         Deque<HashMap<int[], int[]>> guesses = new ArrayDeque<HashMap<int[], int[]>>();
+        int correctCount = 0;
         int round = 1;
 
         System.out.println("Guess the Passcode!");
@@ -205,6 +206,7 @@ public class Main {
                     for (int i = 0; i < 2; i++) {
                         if (i == 0) {
                             System.out.print("\u001B[32m" + entry.get(key)[i] + " "); // Green text
+                            correctCount = entry.get(key)[i];
                         } else {
                             System.out.print("\u001B[31m" + entry.get(key)[i] + "\u001B[0m"); // Red text
                         }
@@ -212,7 +214,13 @@ public class Main {
                     System.out.println();
                 }
             }
-            System.out.printf("%n%nEnter a %d-digit number from 1-%d:%n", game.numDigits, game.maxNumber);
+
+            //Handle win and lose
+            if (correctCount == game.numDigits) {
+                System.out.println("You Win!");
+                break;
+            } else {
+                System.out.printf("%n%nEnter a %d-digit number from 1-%d:%n", game.numDigits, game.maxNumber);
             input = sc.nextLine();
             inputArr = input.split(" ");
             guess = new int[game.numDigits];
@@ -223,6 +231,9 @@ public class Main {
             guessMap.put(guess, checkGuess(guess));
             guesses.add(guessMap);
             round++;
+            }
+
+            
 
         }
         sc.close();
