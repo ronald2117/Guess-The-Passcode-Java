@@ -175,7 +175,8 @@ public class Main {
     }
 
     public void displayGame(Game game) {
-        setSecretCode( );
+        clearConsole();
+        setSecretCode();
         Scanner sc = new Scanner(System.in);
         Deque<HashMap<int[], int[]>> guesses = new ArrayDeque<HashMap<int[], int[]>>();
         int round = 1;
@@ -205,7 +206,7 @@ public class Main {
                         if (i == 0) {
                             System.out.print("\u001B[32m" + entry.get(key)[i] + " "); // Green text
                         } else {
-                            System.out.print("\u001B[31m" + entry.get(key)[i] + " "); // Red text
+                            System.out.print("\u001B[31m" + entry.get(key)[i] + "\u001B[0m"); // Red text
                         }
                     }
                     System.out.println();
