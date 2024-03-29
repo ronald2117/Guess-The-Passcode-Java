@@ -143,17 +143,31 @@ public class Main {
             game.secretCode[i] = rand.nextInt(game.maxNumber) + 1;
         }
     }
+
+    public static String convertMsToMinsAndSecs(long time) {
+        int seconds = (int) time / 1000;
+        int minutes = seconds / 60;
+
+        if (minutes == 0) {
+            return seconds + "s";
+        } else {
+            return minutes + "m " + seconds + "s";
+        }
+    }
     
-    public static void displayWinPage() {
-        clearConsole();
-        System.out.println("\u001B[32mCongratulations!\u001B[0m");
+    public static void displayWinPage(long time, int round) {
+        System.out.println("\n\u001B[32mCongratulations!\u001B[0m");
         System.out.print("The secret code is: ");
 
         for (int i = 0; i < game.numDigits; i++) {
             System.out.print(game.secretCode[i] + " ");
         }
 
-        System.out.println("\n\n1. Play Again");
+        System.out.println();
+
+        System.out.println("Time spent: " + convertMsToMinsAndSecs(time));
+
+        System.out.println("\n1. Play Again");
         System.out.println("2. Main Menu");
 
         System.out.print("Select: ");
@@ -169,6 +183,7 @@ public class Main {
                 break;
         }
 
+        sc.close();
     }
 
     public static int[] checkGuess(int[] guess) {
@@ -206,6 +221,7 @@ public class Main {
     public static  void displayGame(Game game) {
         clearConsole();
         setSecretCode();
+        long initialTime = System.currentTimeMillis();
         Scanner sc = new Scanner(System.in);
         Deque<HashMap<int[], int[]>> guesses = new ArrayDeque<HashMap<int[], int[]>>();
         int correctCount = 0;
@@ -246,7 +262,8 @@ public class Main {
 
             // Handle win and lose
             if (correctCount == game.numDigits) {
-                displayWinPage();
+                long timeFinished = System.currentTimeMillis() - initialTime;
+                displayWinPage(timeFinished, round);
                 break;
             } else {
                 System.out.printf("%nEnter a %d-digit number from 1-%d:%n", game.numDigits, game.maxNumber);
