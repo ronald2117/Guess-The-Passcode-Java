@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
-import java.util.Random;
 
 class Game {
 
@@ -36,6 +35,39 @@ public class Main {
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static String randomLoseStatement() {
+        String loseStatement = "You lose!";
+
+        String[] loseStatements = {
+            "Better luck next time!",
+            "Nice try!",
+            "Keep trying!",
+            "Try and try until you succeed!",
+            "Don't give up!",
+            "You can do it!",
+            "You're almost there!",
+            "You're getting closer!",
+            "You're on the right track!",
+            "You're doing great!",
+            "You're doing well!",
+            "You're doing fine!",
+            "You're doing good!",
+            "You're doing okay!",
+            "You're doing alright!",
+            "Failure is the mother of success!",
+            "Failure is the key to success!",
+            "Failure is the stepping stone to success!",
+        };
+
+        Random random = new Random();
+        for (int i = 0; i < loseStatement.length(); i++) {
+            int index = random.nextInt(loseStatements.length);
+            loseStatement = loseStatements[index];
+        }
+
+        return loseStatement;
     }
 
     public static String randomPraises() {
@@ -77,7 +109,7 @@ public class Main {
         clearConsole();
         System.out.println("Welcome to the Guess the Code Game!\n");
         System.out.println("1. Play Game");
-        System.out.println("2. Leaderboard");
+        System.out.println("2. How to Play");
         System.out.println("3. Exit");
 
         System.out.print("\nSelect: ");
@@ -88,7 +120,7 @@ public class Main {
                 displayGameMenu();
                 break;
             case 2:
-                // displayLeaderboard();
+                displayHowToPlay();
                 break;
             case 3:
                 System.exit(0);
@@ -146,31 +178,28 @@ public class Main {
         sc.close();
     }
 
-    public void displayLeaderboard() {
+    public static void displayHowToPlay() {
         clearConsole();
-        System.out.println("Leaderboard");
-        System.out.println("1. Easy");
-        System.out.println("2. Medium");
-        System.out.println("3. Hard");
-
-        Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
-
-        switch (choice) {
-            case 1:
-                // displayEasyLeaderboard();
-                break;
-            case 2:
-                // displayMediumLeaderboard();
-                break;
-            case 3:
-                // displayHardLeaderboard();
-                break;
-            default:
-                System.out.println("Invalid choice");
-                break;
+        System.out.println("How to Play:\n");
+        System.out.println("1. The computer will generate a secret code consisting of a sequence of numbers.");
+        System.out.println("2. The player will have to guess the secret code.");
+        System.out.println("3. The player will have a limited number of tries to guess the secret code.");
+        System.out.println("4. After each guess, the player will be given feedback on the correctness of the guess.");
+        System.out.println("5. The feedback will consist of two numbers:");
+        System.out.println("   - The number of digits that are correct and in the correct position.");
+        System.out.println("   - The number of digits that are correct but in the wrong position.");
+        System.out.println("6. The player wins the game if they are able to guess the secret code within the given number of tries.");
+        System.out.println("7. The player loses the game if they are unable to guess the secret code within the given number of tries.");
+        System.out.println("8. The player can choose to play the game at different difficulty levels.");
+        System.out.println("9. The player can also choose to customize the game by setting the number of digits, the maximum number, and the maximum number of tries.");
+        System.out.println("10. The player can view the main menu at any time to start a new game or exit the game.");
+        System.out.println("\nPress Enter to go back to the main menu.");
+        try {
+            System.in.read();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        sc.close();
+        displayMainMenu();
     }
 
     public static void setSecretCode() {
@@ -207,6 +236,36 @@ public class Main {
         System.out.println("\nGuesses:");
         displayGuesses(guesses);
 
+        System.out.println("\n1. Play Again");
+        System.out.println("2. Main Menu");
+
+        System.out.print("Select: ");
+        Scanner sc = new Scanner(System.in);
+        int choice = sc.nextInt();
+        switch (choice) {
+            case 1:
+                displayGameMenu();
+                break;
+            case 2:
+                displayMainMenu();
+            default:
+                break;
+        }
+
+        sc.close();
+    }
+
+    public static void displayLosePage(Deque<HashMap<int[], int[]>> guesses) {
+        clearConsole();
+        System.out.println("\u001B[31mYou lose!\u001B[0m\n");
+        System.out.println(randomLoseStatement());
+        System.out.print("The secret code is: ");
+        for (int i = 0; i < game.numDigits; i++) {
+            System.out.print(game.secretCode[i] + " ");
+        }
+
+        System.out.println("Guesses: ");
+        displayGuesses(guesses);
         System.out.println("\n1. Play Again");
         System.out.println("2. Main Menu");
 
@@ -308,6 +367,9 @@ public class Main {
             if (game.correctCount == game.numDigits) {
                 long timeFinished = System.currentTimeMillis() - initialTime;
                 displayWinPage(timeFinished, tries, guesses);
+                break;
+            } else if(tries >= game.maxTries) {
+                displayLosePage(guesses);
                 break;
             } else {
                 System.out.printf("%nEnter a %d-digit number from 1-%d:%n", game.numDigits, game.maxNumber);
