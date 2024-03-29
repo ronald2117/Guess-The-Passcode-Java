@@ -197,7 +197,7 @@ public class Main {
             System.out.println("Round " + round + "/" + game.maxTries);
 
             if (round != 1) {
-                System.out.println("Guesses: ");
+                System.out.println("\nGuesses: ");
             }
             for (HashMap<int[], int[]> entry : guesses) {
                 for (int[] key : entry.keySet()) {
@@ -219,10 +219,10 @@ public class Main {
 
             // Handle win and lose
             if (correctCount == game.numDigits) {
-                System.out.println("You Win!");
+                System.out.println("\nYou Win!");
                 break;
             } else {
-                System.out.printf("%n%nEnter a %d-digit number from 1-%d:%n", game.numDigits, game.maxNumber);
+                System.out.printf("%nEnter a %d-digit number from 1-%d:%n", game.numDigits, game.maxNumber);
                 input = sc.nextLine();
                 inputArr = input.split(" ");
                 guess = new int[game.numDigits];
