@@ -186,8 +186,8 @@ public class Main {
         System.out.println("3. The player will have a limited number of tries to guess the secret code.");
         System.out.println("4. After each guess, the player will be given feedback on the correctness of the guess.");
         System.out.println("5. The feedback will consist of two numbers:");
-        System.out.println("   - The number of digits that are correct and in the correct position.");
-        System.out.println("   - The number of digits that are correct but in the wrong position.");
+        System.out.println("   - The number of digits that are correct and in the correct position. (green text color)");
+        System.out.println("   - The number of digits that are correct but in the wrong position. (red text color)");
         System.out.println("6. The player wins the game if they are able to guess the secret code within the given number of tries.");
         System.out.println("7. The player loses the game if they are unable to guess the secret code within the given number of tries.");
         System.out.println("8. The player can choose to play the game at different difficulty levels.");
@@ -233,7 +233,6 @@ public class Main {
         System.out.println("Time spent: " + convertMsToMinsAndSecs(time));
         System.out.println("Tries: " + tries + "/" + game.maxTries);
 
-        System.out.println("\nGuesses:");
         displayGuesses(guesses);
 
         System.out.println("\n1. Play Again");
@@ -318,6 +317,7 @@ public class Main {
     }
 
     public static void displayGuesses(Deque<HashMap<int[], int[]>> guesses) {
+        System.out.println("\nGuesses: ");
         for (HashMap<int[], int[]> entry : guesses) {
             for (int[] key : entry.keySet()) {
                 for (int i = 0; i < game.numDigits; i++) {
@@ -335,6 +335,14 @@ public class Main {
                 System.out.println();
             }
         }
+
+        if (game.numDigits != game.correctCount) {
+            for (int i = 0; i < game.numDigits; i++) {
+                System.out.print("_ ");
+            }
+            System.out.println("-> _ _");
+        }
+
     }
 
     public static void displayGame(Game game) {
@@ -356,11 +364,10 @@ public class Main {
             HashMap<int[], int[]> guessMap;
 
             System.out.println("Guess the Secret Code!");
+            
+            
+            
             System.out.println("Round " + tries + "/" + game.maxTries);
-
-            if (tries != 1) {
-                System.out.println("\nGuesses: ");
-            }
             
             displayGuesses(guesses);
 
@@ -373,7 +380,7 @@ public class Main {
                 displayLosePage(guesses);
                 break;
             } else {
-                System.out.printf("%nEnter a %d space-separated \ninteger that ranges from 1-%d:%n", game.numDigits, game.maxNumber);
+                System.out.printf("%nEnter a %d space-separated \ninteger that ranges from 1-%d each:%n", game.numDigits, game.maxNumber);
                 input = sc.nextLine();
                 inputArr = input.split(" ");
                 guess = new int[game.numDigits];
