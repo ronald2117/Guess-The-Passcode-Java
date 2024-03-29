@@ -155,17 +155,20 @@ public class Main {
         }
     }
     
-    public static void displayWinPage(long time, int round) {
-        System.out.println("\n\u001B[32mCongratulations!\u001B[0m");
+    public static void displayWinPage(long time, int round, Deque<HashMap<int[], int[]>> guesses) {
+        clearConsole();
+        System.out.println("\n\u001B[32mCongratulations!\u001B[0m\n");
         System.out.print("The secret code is: ");
 
         for (int i = 0; i < game.numDigits; i++) {
             System.out.print(game.secretCode[i] + " ");
         }
-
         System.out.println();
 
         System.out.println("Time spent: " + convertMsToMinsAndSecs(time));
+
+        System.out.println("\nGuesses:");
+        displayGuesses(guesses);
 
         System.out.println("\n1. Play Again");
         System.out.println("2. Main Menu");
@@ -267,7 +270,7 @@ public class Main {
             // Handle win and lose
             if (game.correctCount == game.numDigits) {
                 long timeFinished = System.currentTimeMillis() - initialTime;
-                displayWinPage(timeFinished, round);
+                displayWinPage(timeFinished, round, guesses);
                 break;
             } else {
                 System.out.printf("%nEnter a %d-digit number from 1-%d:%n", game.numDigits, game.maxNumber);
