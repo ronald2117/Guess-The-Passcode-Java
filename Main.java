@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.Random;
 
 class Game {
 
@@ -35,6 +36,41 @@ public class Main {
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static String randomPraises() {
+        String praise = "Lol";
+
+        String[] praises = {
+            "Great job!",
+            "Well done!",
+            "You're amazing!",
+            "Fantastic work!",
+            "Impressive!",
+            "Bravo!",
+            "Keep it up!",
+            "Outstanding!",
+            "Excellent!",
+            "You're a rockstar!",
+            "Awesome!",
+            "Incredible!",
+            "Superb!",
+            "Terrific!",
+            "Way to go!",
+            "Spectacular!",
+            "Phenomenal!",
+            "Marvelous!",
+            "Exceptional!",
+            "Unbelievable!"
+        };
+
+        Random random = new Random();
+        for (int i = 0; i < 20; i++) {
+            int index = random.nextInt(praises.length);
+            praise = praises[index];
+        }
+
+        return praise;
     }
 
     public static void displayMainMenu() {
@@ -155,9 +191,9 @@ public class Main {
         }
     }
     
-    public static void displayWinPage(long time, int round, Deque<HashMap<int[], int[]>> guesses) {
+    public static void displayWinPage(long time, int tries, Deque<HashMap<int[], int[]>> guesses) {
         clearConsole();
-        System.out.println("\n\u001B[32mCongratulations!\u001B[0m\n");
+        System.out.println("\n\u001B[32m" + randomPraises() + "\u001B[0m\n");
         System.out.print("The secret code is: ");
 
         for (int i = 0; i < game.numDigits; i++) {
@@ -166,6 +202,7 @@ public class Main {
         System.out.println();
 
         System.out.println("Time spent: " + convertMsToMinsAndSecs(time));
+        System.out.println("Tries: " + tries + "/" + game.maxTries);
 
         System.out.println("\nGuesses:");
         displayGuesses(guesses);
@@ -247,21 +284,21 @@ public class Main {
         long initialTime = System.currentTimeMillis();
         Scanner sc = new Scanner(System.in);
         Deque<HashMap<int[], int[]>> guesses = new ArrayDeque<HashMap<int[], int[]>>();
-        int round = 1;
+        int tries = 1;
 
         System.out.println("Guess the Passcode!");
         System.out.println("You have " + game.maxTries + " tries to guess the " + game.numDigits + "-digit number.");
 
-        while (round <= game.maxTries) {
+        while (tries <= game.maxTries) {
             clearConsole();
             String input;
             String[] inputArr;
             int[] guess;
             HashMap<int[], int[]> guessMap;
 
-            System.out.println("Round " + round + "/" + game.maxTries);
+            System.out.println("Round " + tries + "/" + game.maxTries);
 
-            if (round != 1) {
+            if (tries != 1) {
                 System.out.println("\nGuesses: ");
             }
             
@@ -270,7 +307,7 @@ public class Main {
             // Handle win and lose
             if (game.correctCount == game.numDigits) {
                 long timeFinished = System.currentTimeMillis() - initialTime;
-                displayWinPage(timeFinished, round, guesses);
+                displayWinPage(timeFinished, tries, guesses);
                 break;
             } else {
                 System.out.printf("%nEnter a %d-digit number from 1-%d:%n", game.numDigits, game.maxNumber);
@@ -283,7 +320,7 @@ public class Main {
                 guessMap = new HashMap<int[], int[]>();
                 guessMap.put(guess, checkGuess(guess));
                 guesses.add(guessMap);
-                round++;
+                tries++;
             }
 
         }
@@ -291,7 +328,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
-        main.displayMainMenu();
+        displayMainMenu();
     }
 }
