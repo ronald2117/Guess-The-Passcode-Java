@@ -13,7 +13,7 @@ class Game {
         this.maxNumber = maxNumber;
         secretCode = new int[numDigits];
     }
-    
+
     int numDigits;
     int maxTries;
     int maxNumber;
@@ -44,7 +44,7 @@ public class Main {
         System.out.println("1. Play Game");
         System.out.println("2. Leaderboard");
         System.out.println("3. Exit");
-        
+
         System.out.print("\nEnter your choice: ");
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
@@ -53,16 +53,16 @@ public class Main {
                 displayGameMenu();
                 break;
             case 2:
-                //displayLeaderboard();
+                // displayLeaderboard();
                 break;
-                case 3:
+            case 3:
                 System.exit(0);
                 break;
-                default:
+            default:
                 System.out.println("Invalid choice");
                 break;
-            }
-            sc.close();
+        }
+        sc.close();
     }
 
     public void displayGameMenu() {
@@ -78,7 +78,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
 
-        switch(choice) {
+        switch (choice) {
             case 1:
                 game = new Game(3, 8, 4);
                 displayGame(game);
@@ -123,13 +123,13 @@ public class Main {
 
         switch (choice) {
             case 1:
-                //displayEasyLeaderboard();
+                // displayEasyLeaderboard();
                 break;
             case 2:
-                //displayMediumLeaderboard();
+                // displayMediumLeaderboard();
                 break;
             case 3:
-                //displayHardLeaderboard();
+                // displayHardLeaderboard();
                 break;
             default:
                 System.out.println("Invalid choice");
@@ -147,23 +147,26 @@ public class Main {
 
     public int[] checkGuess(int[] guess) {
         int[] result = new int[2];
-        boolean[] checked = new boolean[game.numDigits];
+        boolean[] correctlyPlaced = new boolean[game.numDigits];
+        boolean[] incorrectlyPlaced = new boolean[game.numDigits];
         for (int i = 0; i < game.numDigits; i++) {
-            checked[i] = false;
+            correctlyPlaced[i] = false;
+            incorrectlyPlaced[i] = false;
         }
 
         for (int i = 0; i < game.numDigits; i++) {
             if (guess[i] == game.secretCode[i]) {
                 result[0]++;
-                checked[i] = true;
+                correctlyPlaced[i] = true;
             }
         }
-        
+
         for (int i = 0; i < game.numDigits; i++) {
-            if (!checked[i]) {
+            if (!correctlyPlaced[i]) {
                 for (int j = 0; j < game.numDigits; j++) {
-                    if (guess[i] == game.secretCode[j] && !checked[j]) {
+                    if (guess[i] == game.secretCode[j] && !incorrectlyPlaced[j] && !correctlyPlaced[j] && i != j) {
                         result[1]++;
+                        incorrectlyPlaced[j] = true;
                         break;
                     }
                 }
@@ -184,7 +187,7 @@ public class Main {
 
         System.out.println("Guess the Passcode!");
         System.out.println("You have " + game.maxTries + " tries to guess the " + game.numDigits + "-digit number.");
-        
+
         while (round <= game.maxTries) {
             clearConsole();
             String input;
@@ -194,7 +197,7 @@ public class Main {
 
             System.out.println("Round " + round + "/" + game.maxTries);
 
-            if(round != 1) {
+            if (round != 1) {
                 System.out.println("Guesses: ");
             }
             for (HashMap<int[], int[]> entry : guesses) {
@@ -215,25 +218,23 @@ public class Main {
                 }
             }
 
-            //Handle win and lose
+            // Handle win and lose
             if (correctCount == game.numDigits) {
                 System.out.println("You Win!");
                 break;
             } else {
                 System.out.printf("%n%nEnter a %d-digit number from 1-%d:%n", game.numDigits, game.maxNumber);
-            input = sc.nextLine();
-            inputArr = input.split(" ");
-            guess = new int[game.numDigits];
-            for (int i = 0; i < game.numDigits; i++) {
-                guess[i] = Integer.parseInt(inputArr[i]);
+                input = sc.nextLine();
+                inputArr = input.split(" ");
+                guess = new int[game.numDigits];
+                for (int i = 0; i < game.numDigits; i++) {
+                    guess[i] = Integer.parseInt(inputArr[i]);
+                }
+                guessMap = new HashMap<int[], int[]>();
+                guessMap.put(guess, checkGuess(guess));
+                guesses.add(guessMap);
+                round++;
             }
-            guessMap = new HashMap<int[], int[]>();
-            guessMap.put(guess, checkGuess(guess));
-            guesses.add(guessMap);
-            round++;
-            }
-
-            
 
         }
         sc.close();
