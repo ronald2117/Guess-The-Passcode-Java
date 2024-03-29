@@ -18,7 +18,7 @@ class Game {
     int maxTries;
     int maxNumber;
     int secretCode[];
-
+    int correctCount = 0;
 }
 
 public class Main {
@@ -218,13 +218,32 @@ public class Main {
 
     }
 
-    public static  void displayGame(Game game) {
+    public static void displayGuesses(Deque<HashMap<int[], int[]>> guesses) {
+        for (HashMap<int[], int[]> entry : guesses) {
+            for (int[] key : entry.keySet()) {
+                for (int i = 0; i < game.numDigits; i++) {
+                    System.out.print(key[i] + " ");
+                }
+                System.out.print("-> ");
+                for (int i = 0; i < 2; i++) {
+                    if (i == 0) {
+                        System.out.print("\u001B[32m" + entry.get(key)[i] + " "); // Green text
+                        game.correctCount = entry.get(key)[i];
+                    } else {
+                        System.out.print("\u001B[31m" + entry.get(key)[i] + "\u001B[0m"); // Red text
+                    }
+                }
+                System.out.println();
+            }
+        }
+    }
+
+    public static void displayGame(Game game) {
         clearConsole();
         setSecretCode();
         long initialTime = System.currentTimeMillis();
         Scanner sc = new Scanner(System.in);
         Deque<HashMap<int[], int[]>> guesses = new ArrayDeque<HashMap<int[], int[]>>();
-        int correctCount = 0;
         int round = 1;
 
         System.out.println("Guess the Passcode!");
@@ -242,26 +261,11 @@ public class Main {
             if (round != 1) {
                 System.out.println("\nGuesses: ");
             }
-            for (HashMap<int[], int[]> entry : guesses) {
-                for (int[] key : entry.keySet()) {
-                    for (int i = 0; i < game.numDigits; i++) {
-                        System.out.print(key[i] + " ");
-                    }
-                    System.out.print("-> ");
-                    for (int i = 0; i < 2; i++) {
-                        if (i == 0) {
-                            System.out.print("\u001B[32m" + entry.get(key)[i] + " "); // Green text
-                            correctCount = entry.get(key)[i];
-                        } else {
-                            System.out.print("\u001B[31m" + entry.get(key)[i] + "\u001B[0m"); // Red text
-                        }
-                    }
-                    System.out.println();
-                }
-            }
+            
+            displayGuesses(guesses);
 
             // Handle win and lose
-            if (correctCount == game.numDigits) {
+            if (game.correctCount == game.numDigits) {
                 long timeFinished = System.currentTimeMillis() - initialTime;
                 displayWinPage(timeFinished, round);
                 break;
