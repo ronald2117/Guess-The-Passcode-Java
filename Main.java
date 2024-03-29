@@ -11,13 +11,13 @@ class Game {
         this.numDigits = numDigits;
         this.maxTries = maxTries;
         this.maxNumber = maxNumber;
-        secretCode = new int[numDigits];
+        passcode = new int[numDigits];
     }
 
     int numDigits;
     int maxTries;
     int maxNumber;
-    int secretCode[];
+    int passcode[];
     int correctCount = 0;
 }
 
@@ -107,7 +107,7 @@ public class Main {
 
     public static void displayMainMenu() {
         clearConsole();
-        System.out.println("Welcome to the Guess the Code Game!\n");
+        System.out.println("Welcome to the Guess the Passcode Game!\n");
         System.out.println("1. Play Game");
         System.out.println("2. How to Play");
         System.out.println("3. Exit");
@@ -202,10 +202,10 @@ public class Main {
         displayMainMenu();
     }
 
-    public static void setSecretCode() {
+    public static void setPasscode() {
         Random rand = new Random();
         for (int i = 0; i < game.numDigits; i++) {
-            game.secretCode[i] = rand.nextInt(game.maxNumber) + 1;
+            game.passcode[i] = rand.nextInt(game.maxNumber) + 1;
         }
     }
 
@@ -223,10 +223,10 @@ public class Main {
     public static void displayWinPage(long time, int tries, Deque<HashMap<int[], int[]>> guesses) {
         clearConsole();
         System.out.println("\n\u001B[32m" + randomPraises() + "\u001B[0m\n");
-        System.out.print("The secret code is: ");
+        System.out.print("The passcode is: ");
 
         for (int i = 0; i < game.numDigits; i++) {
-            System.out.print(game.secretCode[i] + " ");
+            System.out.print(game.passcode[i] + " ");
         }
         System.out.println();
 
@@ -259,9 +259,9 @@ public class Main {
         clearConsole();
         System.out.println("\u001B[31mYou lose!\u001B[0m\n");
         System.out.println(randomLoseStatement());
-        System.out.print("The secret code is: ");
+        System.out.print("The passcode is: ");
         for (int i = 0; i < game.numDigits; i++) {
-            System.out.print(game.secretCode[i] + " ");
+            System.out.print(game.passcode[i] + " ");
         }
 
         System.out.println("Guesses: ");
@@ -295,7 +295,7 @@ public class Main {
         }
 
         for (int i = 0; i < game.numDigits; i++) {
-            if (guess[i] == game.secretCode[i]) {
+            if (guess[i] == game.passcode[i]) {
                 result[0]++;
                 correctlyPlaced[i] = true;
             }
@@ -304,7 +304,7 @@ public class Main {
         for (int i = 0; i < game.numDigits; i++) {
             if (!correctlyPlaced[i]) {
                 for (int j = 0; j < game.numDigits; j++) {
-                    if (guess[i] == game.secretCode[j] && !incorrectlyPlaced[j] && !correctlyPlaced[j] && i != j) {
+                    if (guess[i] == game.passcode[j] && !incorrectlyPlaced[j] && !correctlyPlaced[j] && i != j) {
                         result[1]++;
                         incorrectlyPlaced[j] = true;
                         break;
@@ -339,7 +339,7 @@ public class Main {
 
     public static void displayGame(Game game) {
         clearConsole();
-        setSecretCode();
+        setPasscode();
         long initialTime = System.currentTimeMillis();
         Scanner sc = new Scanner(System.in);
         Deque<HashMap<int[], int[]>> guesses = new ArrayDeque<HashMap<int[], int[]>>();
