@@ -37,7 +37,7 @@ public class Main {
         }
     }
 
-    public void displayMainMenu() {
+    public static void displayMainMenu() {
         clearConsole();
         System.out.println("Welcome to the Guess the Code Game!\n");
         System.out.println("1. Play Game");
@@ -64,7 +64,7 @@ public class Main {
         sc.close();
     }
 
-    public void displayGameMenu() {
+    public static void displayGameMenu() {
         clearConsole();
         System.out.println("Choose the difficulty level:\n");
         System.out.println("1. Easy");
@@ -143,8 +143,35 @@ public class Main {
             game.secretCode[i] = rand.nextInt(game.maxNumber) + 1;
         }
     }
+    
+    public static void displayWinPage() {
+        clearConsole();
+        System.out.println("\u001B[32mCongratulations!\u001B[0m");
+        System.out.print("The secret code is: ");
 
-    public int[] checkGuess(int[] guess) {
+        for (int i = 0; i < game.numDigits; i++) {
+            System.out.print(game.secretCode[i] + " ");
+        }
+
+        System.out.println("\n\n1. Play Again");
+        System.out.println("2. Main Menu");
+
+        System.out.print("Select: ");
+        Scanner sc = new Scanner(System.in);
+        int choice = sc.nextInt();
+        switch (choice) {
+            case 1:
+                displayGameMenu();
+                break;
+            case 2:
+                displayMainMenu();
+            default:
+                break;
+        }
+
+    }
+
+    public static int[] checkGuess(int[] guess) {
         int[] result = new int[2];
         boolean[] correctlyPlaced = new boolean[game.numDigits];
         boolean[] incorrectlyPlaced = new boolean[game.numDigits];
@@ -176,7 +203,7 @@ public class Main {
 
     }
 
-    public void displayGame(Game game) {
+    public static  void displayGame(Game game) {
         clearConsole();
         setSecretCode();
         Scanner sc = new Scanner(System.in);
@@ -219,7 +246,7 @@ public class Main {
 
             // Handle win and lose
             if (correctCount == game.numDigits) {
-                System.out.println("\nYou Win!");
+                displayWinPage();
                 break;
             } else {
                 System.out.printf("%nEnter a %d-digit number from 1-%d:%n", game.numDigits, game.maxNumber);
