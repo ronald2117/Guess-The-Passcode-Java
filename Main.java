@@ -355,6 +355,7 @@ public class Main {
             int[] guess;
             HashMap<int[], int[]> guessMap;
 
+            System.out.println("Guess the Secret Code!");
             System.out.println("Round " + tries + "/" + game.maxTries);
 
             if (tries != 1) {
@@ -372,7 +373,7 @@ public class Main {
                 displayLosePage(guesses);
                 break;
             } else {
-                System.out.printf("%nEnter a %d-digit number from 1-%d:%n", game.numDigits, game.maxNumber);
+                System.out.printf("%nEnter a %d space-separated \ninteger that ranges from 1-%d:%n", game.numDigits, game.maxNumber);
                 input = sc.nextLine();
                 inputArr = input.split(" ");
                 guess = new int[game.numDigits];
