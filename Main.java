@@ -39,13 +39,12 @@ public class Main {
 
     public void displayMainMenu() {
         clearConsole();
-        System.out.println("Welcome to the Guess the Code Game");
-        System.out.println("Main Menu");
+        System.out.println("Welcome to the Guess the Code Game!\n");
         System.out.println("1. Play Game");
         System.out.println("2. Leaderboard");
         System.out.println("3. Exit");
 
-        System.out.print("\nEnter your choice: ");
+        System.out.print("\nSelect: ");
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
         switch (choice) {
@@ -67,7 +66,7 @@ public class Main {
 
     public void displayGameMenu() {
         clearConsole();
-        System.out.println("Game Menu");
+        System.out.println("Choose the difficulty level:\n");
         System.out.println("1. Easy");
         System.out.println("2. Medium");
         System.out.println("3. Hard");
