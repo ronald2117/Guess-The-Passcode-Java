@@ -62,10 +62,8 @@ public class Main {
         };
 
         Random random = new Random();
-        for (int i = 0; i < loseStatement.length(); i++) {
-            int index = random.nextInt(loseStatements.length);
-            loseStatement = loseStatements[index];
-        }
+        int index = random.nextInt(loseStatements.length);
+        loseStatement = loseStatements[index];
 
         return loseStatement;
     }
@@ -97,10 +95,8 @@ public class Main {
         };
 
         Random random = new Random();
-        for (int i = 0; i < 20; i++) {
-            int index = random.nextInt(praises.length);
-            praise = praises[index];
-        }
+        int index = random.nextInt(praises.length);
+        praise = praises[index];
 
         return praise;
     }
@@ -262,8 +258,7 @@ public class Main {
         for (int i = 0; i < game.numDigits; i++) {
             System.out.print(game.passcode[i] + " ");
         }
-
-        System.out.println("Guesses: ");
+        System.out.println();
         displayGuesses(guesses);
         System.out.println("\n1. Play Again");
         System.out.println("2. Main Menu");
@@ -336,7 +331,7 @@ public class Main {
             }
         }
 
-        if (game.numDigits != game.correctCount) {
+        if (game.numDigits != game.correctCount && guesses.size() != game.maxTries){
             for (int i = 0; i < game.numDigits; i++) {
                 System.out.print("_ ");
             }
@@ -351,7 +346,7 @@ public class Main {
         long initialTime = System.currentTimeMillis();
         Scanner sc = new Scanner(System.in);
         Deque<HashMap<int[], int[]>> guesses = new ArrayDeque<HashMap<int[], int[]>>();
-        int tries = 1;
+        int tries = 0;
 
         System.out.println("Guess the Passcode!");
         System.out.println("You have " + game.maxTries + " tries to guess the " + game.numDigits + "-digit number.");
@@ -376,7 +371,7 @@ public class Main {
                 long timeFinished = System.currentTimeMillis() - initialTime;
                 displayWinPage(timeFinished, tries, guesses);
                 break;
-            } else if(tries >= game.maxTries) {
+            } else if(tries == game.maxTries) {
                 displayLosePage(guesses);
                 break;
             } else {
