@@ -25,16 +25,8 @@ public class Main {
     static Game game;
 
     public static void clearConsole() {
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
-            }
-        } catch (IOException | InterruptedException ex) {
-            ex.printStackTrace();
-        }
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     public static String randomLoseStatement() {
@@ -157,9 +149,9 @@ public class Main {
             case 4:
                 System.out.print("Enter number of digits: ");
                 int numDigits = sc.nextInt();
-                System.out.print("Enter max number: ");
+                System.out.print("Enter the maximum  number per digit: ");
                 int maxNumber = sc.nextInt();
-                System.out.print("Enter max tries: ");
+                System.out.print("Enter the maximum tries: ");
                 int maxTries = sc.nextInt();
                 game = new Game(numDigits, maxTries, maxNumber);
                 displayGame(game);
