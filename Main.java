@@ -202,7 +202,7 @@ public class Main {
         System.out.println("7. The player loses the game if they are unable to guess the secret code within the given number of tries.");
         System.out.println("8. The player can choose to play the game at different difficulty levels.");
         System.out.println("9. The player can also choose to customize the game by setting the number of digits, the maximum number, and the maximum number of tries.");
-        System.out.println("10. The player can view the main menu at any time to start a new game or exit the game.");
+        System.out.println("10. The player can view the results and a menu after to start a new game or exit the game.");
         System.out.println("\nPress Enter to go back to the main menu.");
         try {
             System.in.read();
