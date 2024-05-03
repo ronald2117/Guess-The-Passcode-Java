@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.util.Random;
-// import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
