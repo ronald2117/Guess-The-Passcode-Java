@@ -1,12 +1,11 @@
 import java.util.Scanner;
 import java.util.Random;
-import java.io.IOException;
+// import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
 
 class Game {
-
     Game(int numDigits, int maxTries, int maxNumber) {
         this.numDigits = numDigits;
         this.maxTries = maxTries;
@@ -14,11 +13,35 @@ class Game {
         passcode = new int[numDigits];
     }
 
-    int numDigits;
-    int maxTries;
-    int maxNumber;
-    int passcode[];
-    int correctCount = 0;
+    private int numDigits;
+    private int maxTries;
+    private int maxNumber;
+    private int passcode[];
+    private int correctCount = 0;
+
+    int getNumDigits() {
+        return numDigits;
+    }
+
+    int getMaxTries() {
+        return maxTries;
+    }
+
+    int getMaxNumber() {
+        return maxNumber;
+    }
+
+    int[] getPasscode() {
+        return passcode;
+    }
+
+    int getCorrectCount() {
+        return correctCount;
+    }
+
+    void setCorrectCount(int value) {
+        correctCount = value;
+    }
 }
 
 public class Main {
@@ -192,8 +215,8 @@ public class Main {
 
     public static void setPasscode() {
         Random rand = new Random();
-        for (int i = 0; i < game.numDigits; i++) {
-            game.passcode[i] = rand.nextInt(game.maxNumber) + 1;
+        for (int i = 0; i < game.getNumDigits(); i++) {
+            game.getPasscode()[i] = rand.nextInt(game.getMaxNumber()) + 1;
         }
     }
 
@@ -213,13 +236,13 @@ public class Main {
         System.out.println("\n\u001B[32m" + randomPraises() + "\u001B[0m\n");
         System.out.print("The passcode is: ");
 
-        for (int i = 0; i < game.numDigits; i++) {
-            System.out.print(game.passcode[i] + " ");
+        for (int i = 0; i < game.getNumDigits(); i++) {
+            System.out.print(game.getPasscode()[i] + " ");
         }
         System.out.println();
 
         System.out.println("Time spent: " + convertMsToMinsAndSecs(time));
-        System.out.println("Tries: " + tries + "/" + game.maxTries);
+        System.out.println("Tries: " + tries + "/" + game.getMaxTries());
 
         displayGuesses(guesses);
 
@@ -247,8 +270,8 @@ public class Main {
         System.out.println("\u001B[31mYou lose!\u001B[0m\n");
         System.out.println(randomLoseStatement());
         System.out.print("The passcode is: ");
-        for (int i = 0; i < game.numDigits; i++) {
-            System.out.print(game.passcode[i] + " ");
+        for (int i = 0; i < game.getNumDigits(); i++) {
+            System.out.print(game.getPasscode()[i] + " ");
         }
         System.out.println();
         displayGuesses(guesses);
@@ -273,24 +296,24 @@ public class Main {
 
     public static int[] checkGuess(int[] guess) {
         int[] result = new int[2];
-        boolean[] correctlyPlaced = new boolean[game.numDigits];
-        boolean[] incorrectlyPlaced = new boolean[game.numDigits];
-        for (int i = 0; i < game.numDigits; i++) {
+        boolean[] correctlyPlaced = new boolean[game.getNumDigits()];
+        boolean[] incorrectlyPlaced = new boolean[game.getNumDigits()];
+        for (int i = 0; i < game.getNumDigits(); i++) {
             correctlyPlaced[i] = false;
             incorrectlyPlaced[i] = false;
         }
 
-        for (int i = 0; i < game.numDigits; i++) {
-            if (guess[i] == game.passcode[i]) {
+        for (int i = 0; i < game.getNumDigits(); i++) {
+            if (guess[i] == game.getPasscode()[i]) {
                 result[0]++;
                 correctlyPlaced[i] = true;
             }
         }
 
-        for (int i = 0; i < game.numDigits; i++) {
+        for (int i = 0; i < game.getNumDigits(); i++) {
             if (!correctlyPlaced[i]) {
-                for (int j = 0; j < game.numDigits; j++) {
-                    if (guess[i] == game.passcode[j] && !incorrectlyPlaced[j] && !correctlyPlaced[j] && i != j) {
+                for (int j = 0; j < game.getNumDigits(); j++) {
+                    if (guess[i] == game.getPasscode()[j] && !incorrectlyPlaced[j] && !correctlyPlaced[j] && i != j) {
                         result[1]++;
                         incorrectlyPlaced[j] = true;
                         break;
@@ -307,14 +330,14 @@ public class Main {
         System.out.println("\nGuesses: ");
         for (HashMap<int[], int[]> entry : guesses) {
             for (int[] key : entry.keySet()) {
-                for (int i = 0; i < game.numDigits; i++) {
+                for (int i = 0; i < game.getNumDigits(); i++) {
                     System.out.print(key[i] + " ");
                 }
                 System.out.print("-> ");
                 for (int i = 0; i < 2; i++) {
                     if (i == 0) {
                         System.out.print("\u001B[32m" + entry.get(key)[i] + " "); // Green text
-                        game.correctCount = entry.get(key)[i];
+                        game.setCorrectCount(entry.get(key)[i]);
                     } else {
                         System.out.print("\u001B[31m" + entry.get(key)[i] + "\u001B[0m"); // Red text
                     }
@@ -323,8 +346,8 @@ public class Main {
             }
         }
 
-        if (game.numDigits != game.correctCount && guesses.size() != game.maxTries){
-            for (int i = 0; i < game.numDigits; i++) {
+        if (game.getNumDigits() != game.getCorrectCount() && guesses.size() != game.getMaxTries()){
+            for (int i = 0; i < game.getNumDigits(); i++) {
                 System.out.print("_ ");
             }
             System.out.println("-> _ _");
@@ -341,9 +364,9 @@ public class Main {
         int tries = 0;
 
         System.out.println("Guess the Passcode!");
-        System.out.println("You have " + game.maxTries + " tries to guess the " + game.numDigits + "-digit number.");
+        System.out.println("You have " + game.getMaxTries() + " tries to guess the " + game.getNumDigits() + "-digit number.");
 
-        while (tries <= game.maxTries) {
+        while (tries <= game.getMaxTries()) {
             clearConsole();
             String input;
             String[] inputArr;
@@ -354,24 +377,24 @@ public class Main {
             
             
             
-            System.out.println("Round " + tries + "/" + game.maxTries);
+            System.out.println("Round " + tries + "/" + game.getMaxTries());
             
             displayGuesses(guesses);
 
             // Handle win and lose
-            if (game.correctCount == game.numDigits) {
+            if (game.getCorrectCount() == game.getNumDigits()) {
                 long timeFinished = System.currentTimeMillis() - initialTime;
                 displayWinPage(timeFinished, tries, guesses);
                 break;
-            } else if(tries == game.maxTries) {
+            } else if(tries == game.getMaxTries()) {
                 displayLosePage(guesses);
                 break;
             } else {
-                System.out.printf("%nEnter a %d space-separated \ninteger that ranges from 1-%d each:%n", game.numDigits, game.maxNumber);
+                System.out.printf("%nEnter a %d space-separated \ninteger that ranges from 1-%d each:%n", game.getNumDigits(), game.getMaxNumber());
                 input = sc.nextLine();
                 inputArr = input.split(" ");
-                guess = new int[game.numDigits];
-                for (int i = 0; i < game.numDigits; i++) {
+                guess = new int[game.getNumDigits()];
+                for (int i = 0; i < game.getNumDigits(); i++) {
                     guess[i] = Integer.parseInt(inputArr[i]);
                 }
                 guessMap = new HashMap<int[], int[]>();
