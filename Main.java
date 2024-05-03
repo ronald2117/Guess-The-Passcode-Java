@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.Random;
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 class Game {
@@ -230,7 +230,7 @@ public class Main {
         }
     }
     
-    public static void displayWinPage(long time, int tries, Deque<HashMap<int[], int[]>> guesses) {
+    public static void displayWinPage(long time, int tries, ArrayList<HashMap<int[], int[]>> guesses) {
         clearConsole();
         System.out.println("\n\u001B[32m" + randomPraises() + "\u001B[0m\n");
         System.out.print("The passcode is: ");
@@ -264,7 +264,7 @@ public class Main {
         sc.close();
     }
 
-    public static void displayLosePage(Deque<HashMap<int[], int[]>> guesses) {
+    public static void displayLosePage(ArrayList<HashMap<int[], int[]>> guesses) {
         clearConsole();
         System.out.println("\u001B[31mYou lose!\u001B[0m\n");
         System.out.println(randomLoseStatement());
@@ -325,7 +325,7 @@ public class Main {
 
     }
 
-    public static void displayGuesses(Deque<HashMap<int[], int[]>> guesses) {
+    public static void displayGuesses(ArrayList<HashMap<int[], int[]>> guesses) {
         System.out.println("\nGuesses: ");
         for (HashMap<int[], int[]> entry : guesses) {
             for (int[] key : entry.keySet()) {
@@ -333,25 +333,20 @@ public class Main {
                     System.out.print(key[i] + " ");
                 }
                 System.out.print("-> ");
-                for (int i = 0; i < 2; i++) {
-                    if (i == 0) {
-                        System.out.print("\u001B[32m" + entry.get(key)[i] + " "); // Green text
-                        game.setCorrectCount(entry.get(key)[i]);
-                    } else {
-                        System.out.print("\u001B[31m" + entry.get(key)[i] + "\u001B[0m"); // Red text
-                    }
+                System.out.print("\u001B[32m" + entry.get(key)[0] + " "); // Green text for correct digits in correct position
+                game.setCorrectCount(entry.get(key)[0]);
+                System.out.print("\u001B[31m" + entry.get(key)[1] + "\u001B[0m"); // Red text for correct digits in wrong position
                 }
                 System.out.println();
             }
-        }
-
+        
+        // Display empty guesses
         if (game.getNumDigits() != game.getCorrectCount() && guesses.size() != game.getMaxTries()){
             for (int i = 0; i < game.getNumDigits(); i++) {
                 System.out.print("_ ");
             }
             System.out.println("-> _ _");
         }
-
     }
 
     public static void displayGame(Game game) {
@@ -359,11 +354,11 @@ public class Main {
         setPasscode();
         long initialTime = System.currentTimeMillis();
         Scanner sc = new Scanner(System.in);
-        Deque<HashMap<int[], int[]>> guesses = new ArrayDeque<HashMap<int[], int[]>>();
+        ArrayList<HashMap<int[], int[]>> guesses = new ArrayList<HashMap<int[], int[]>>();
         int tries = 0;
 
         System.out.println("Guess the Passcode!");
-        System.out.println("You have " + game.getMaxTries() + " tries to guess the " + game.getNumDigits() + "-digit number.");
+        System.out.println("You have " + game.getMaxTries() + " tries to guess the " + game.getNumDigits() + "-digit passcode.");
 
         while (tries <= game.getMaxTries()) {
             clearConsole();
@@ -372,9 +367,7 @@ public class Main {
             int[] guess;
             HashMap<int[], int[]> guessMap;
 
-            System.out.println("Guess the Secret Code!");
-            
-            
+            System.out.println("Guess the Passcode!");
             
             System.out.println("Round " + tries + "/" + game.getMaxTries());
             
