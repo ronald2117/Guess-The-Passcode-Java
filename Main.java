@@ -367,9 +367,13 @@ public class Main {
             int[] guess;
             HashMap<int[], int[]> guessMap;
 
-            System.out.println("Guess the Passcode!");
-            
+            System.out.println("\033[;033m" + "Guess the Passcode!" + "\033[0m");
             System.out.println("Round " + tries + "/" + game.getMaxTries());
+            for (int i = 0; i < game.getNumDigits(); i++) {
+                System.out.print("X ");
+            }
+
+            System.out.print( "-> 1-" + game.getMaxNumber() + "\n");
             
             displayGuesses(guesses);
 
@@ -378,11 +382,11 @@ public class Main {
                 long timeFinished = System.currentTimeMillis() - initialTime;
                 displayWinPage(timeFinished, tries, guesses);
                 break;
-            } else if(tries == game.getMaxTries()) {
+            } else if (tries == game.getMaxTries()) {
                 displayLosePage(guesses);
                 break;
             } else {
-                System.out.printf("%nEnter a %d space-separated \ninteger that ranges from 1-%d each:%n", game.getNumDigits(), game.getMaxNumber());
+                System.out.println("\nEnter your guess: ");
                 input = sc.nextLine();
                 inputArr = input.split(" ");
                 guess = new int[game.getNumDigits()];
