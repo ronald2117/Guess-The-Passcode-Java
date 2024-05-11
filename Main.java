@@ -373,7 +373,7 @@ public class Main {
             HashMap<int[], int[]> guessMap;
 
             System.out.println("\033[;033m" + "Guess the Passcode!" + "\033[0m");
-            System.out.println("Round " + tries + "/" + game.getMaxTries());
+            System.out.println("Round " + (tries + 1) + "/" + game.getMaxTries());
             for (int i = 0; i < game.getNumDigits(); i++) {
                 System.out.print("X ");
             }
