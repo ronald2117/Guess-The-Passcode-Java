@@ -362,9 +362,6 @@ public class Main {
         ArrayList<HashMap<int[], int[]>> guesses = new ArrayList<HashMap<int[], int[]>>();
         int tries = 0;
 
-        System.out.println("Guess the Passcode!");
-        System.out.println("You have " + game.getMaxTries() + " tries to guess the " + game.getNumDigits() + "-digit passcode.");
-
         while (tries <= game.getMaxTries()) {
             clearConsole();
             String input;
