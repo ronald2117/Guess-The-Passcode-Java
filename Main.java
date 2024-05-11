@@ -221,7 +221,12 @@ public class Main {
 
     public static String convertMsToMinsAndSecs(long time) {
         int seconds = (int) time / 1000;
-        int minutes = seconds / 60;
+        int minutes = 0;
+
+        if (seconds >= 60) {
+            minutes = seconds / 60;
+            seconds = seconds % 60;
+        }
 
         if (minutes == 0) {
             return seconds + "s";
