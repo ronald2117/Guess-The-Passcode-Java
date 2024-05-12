@@ -271,8 +271,7 @@ public class Main {
 
     public static void displayLosePage(ArrayList<HashMap<int[], int[]>> guesses) {
         clearConsole();
-        System.out.println("\u001B[31mYou lose!\u001B[0m\n");
-        System.out.println(randomLoseStatement());
+        System.out.println("\u001B[31m" + randomLoseStatement() + "\u001B[0m");
         System.out.print("The passcode is: ");
         for (int i = 0; i < game.getNumDigits(); i++) {
             System.out.print(game.getPasscode()[i] + " ");
@@ -390,6 +389,10 @@ public class Main {
             } else {
                 System.out.println("\nEnter your guess: ");
                 input = sc.nextLine();
+                if (input.equals("give up")) {
+                    displayLosePage(guesses);
+                    break;
+                }
                 inputArr = input.split(" ");
                 guess = new int[game.getNumDigits()];
                 for (int i = 0; i < game.getNumDigits(); i++) {
