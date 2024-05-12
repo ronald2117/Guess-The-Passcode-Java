@@ -60,16 +60,7 @@ public class Main {
             "Keep trying!",
             "Try and try until you succeed!",
             "Don't give up!",
-            "You can do it!",
             "You're almost there!",
-            "You're getting closer!",
-            "You're on the right track!",
-            "You're doing great!",
-            "You're doing well!",
-            "You're doing fine!",
-            "You're doing good!",
-            "You're doing okay!",
-            "You're doing alright!",
             "Failure is the mother of success!",
             "Failure is the key to success!",
             "Failure is the stepping stone to success!",
@@ -271,7 +262,7 @@ public class Main {
 
     public static void displayLosePage(ArrayList<HashMap<int[], int[]>> guesses) {
         clearConsole();
-        System.out.println("\u001B[31m" + randomLoseStatement() + "\u001B[0m");
+        System.out.println("\u001B[31m" + randomLoseStatement() + "\u001B[0m\n");
         System.out.print("The passcode is: ");
         for (int i = 0; i < game.getNumDigits(); i++) {
             System.out.print(game.getPasscode()[i] + " ");
@@ -389,7 +380,7 @@ public class Main {
             } else {
                 System.out.println("\nEnter your guess: ");
                 input = sc.nextLine();
-                if (input.equals("give up")) {
+                if (input.equals("giveup")) {
                     displayLosePage(guesses);
                     break;
                 }
