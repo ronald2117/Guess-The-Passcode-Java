@@ -108,7 +108,9 @@ public class Main {
 
     public static void displayMainMenu() {
         clearConsole();
-        System.out.println("Welcome to the Guess the Passcode Game!\n");
+        System.out.println("\033[;033m" + "Guess the Passcode!" + "\033[0m");
+        System.out.println("Are you ready for a challenge?\n");
+
         System.out.println("1. Play Game");
         System.out.println("2. How to Play");
         System.out.println("3. Exit");
