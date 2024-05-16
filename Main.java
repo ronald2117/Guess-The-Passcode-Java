@@ -212,7 +212,7 @@ public class Main {
         }
     }
 
-    public static String convertMsToMinsAndSecs(long time) {
+    public static String formatTime(long time) {
         int seconds = (int) time / 1000;
         int minutes = 0;
 
@@ -238,7 +238,7 @@ public class Main {
         }
         System.out.println();
 
-        System.out.println("Time spent: " + convertMsToMinsAndSecs(time));
+        System.out.println("Time spent: " + formatTime(time));
         System.out.println("Tries: " + tries + "/" + game.getMaxTries());
 
         displayGuesses(guesses);
@@ -382,19 +382,36 @@ public class Main {
             } else {
                 System.out.println("\nEnter your guess: ");
                 input = sc.nextLine();
-                if (input.equals("giveup")) {
+                //special comands
+                if (input.equals("-ff")) {
                     displayLosePage(guesses);
                     break;
+                } else if(input.equals("-t")) {
+                    //show a page the shows current time and press enter to exit
+                    long timeFinished = System.currentTimeMillis() - initialTime;
+                    clearConsole();
+                    System.out.println("Time spent: " + formatTime(timeFinished));
+                    System.out.println("\nPress Enter to go back to the game.");
+                } else if (input.equals("-h")) {
+                    //show a page that shows the rules of the game and press enter to exit
+                    displayHowToPlay();
+                } else if (input.equals("-q")) {
+                    //quit the game
+                    displayMainMenu();
+                } else if (input.equals("-r")) {
+                    //restart the game
+                    displayGame(game);
+                } else {
+                    inputArr = input.split(" ");
+                    guess = new int[game.getNumDigits()];
+                    for (int i = 0; i < game.getNumDigits(); i++) {
+                        guess[i] = Integer.parseInt(inputArr[i]);
+                    }
+                    guessMap = new HashMap<int[], int[]>();
+                    guessMap.put(guess, checkGuess(guess));
+                    guesses.add(guessMap);
+                    tries++;
                 }
-                inputArr = input.split(" ");
-                guess = new int[game.getNumDigits()];
-                for (int i = 0; i < game.getNumDigits(); i++) {
-                    guess[i] = Integer.parseInt(inputArr[i]);
-                }
-                guessMap = new HashMap<int[], int[]>();
-                guessMap.put(guess, checkGuess(guess));
-                guesses.add(guessMap);
-                tries++;
             }
 
         }
